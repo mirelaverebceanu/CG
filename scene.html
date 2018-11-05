@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <title>Scene</title>
+    <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../Common/MV.js"></script>
+
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+
+        attribute vec4 vColor;
+        varying vec4 fColor;
+
+        uniform mat4 R;
+        uniform mat4 S;
+        uniform mat4 T;
+
+        void main(){
+            gl_Position = T * S * R * vPosition;
+            fColor = vColor;
+        }
+    </script>
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision highp float;
+
+        varying vec4 fColor;
+
+        void main(){
+            gl_FragColor = fColor;
+        }
+    </script>
+   
+    <script src="sphereObj.js"></script>
+    <script src="coneObj.js"></script>
+    <script src="cylinderObj.js"></script>
+    <script src="cubeObj.js"></script>
+    <script src="scene.js"></script>
+</head>
+
+<body>
+    <div style="height: 100px; width: 200px; border:3px solid #000000; position: fixed; left: 870px; top: 8px; color: blue">
+        <h4 style="font-family: Verdana;"><i>Change color</i></h4> 
+
+        <select name="colors" id="colorMenu" onchange="colorChange()">
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+        </select>
+        <br/><br/>
+
+    </div>
+
+    <div style="height: 200px; width: 200px; border:3px solid #000000; position: fixed; left: 870px; top: 110px; color: blue">
+        Visible<input type="checkbox" name="visible" id="visibleChkB" checked> 
+        <h4 style="font-family: Verdana;"><i>Objects</i></h4> 
+        <select name="objects" id="objMenu">
+                <option value="sphere">Sphere</option>
+                <option value="cone">Cone</option>
+                <option value="cylinder">Cylinder</option>
+                <option value="cube">Cube</option>
+
+        </select>
+        <br/><br/>
+  
+            id: <input type="text" id="objId" >
+  
+            Select type of object:
+            <select id ="objType" >
+            <option value="sphere">Sphere </option>
+            <option value="cone">Cone </option>
+            <option value="cylinder">Cylinder </option>
+            <option value="cube">Cube </option>
+        </select>
+        <button  onclick="addNewObject()"> Add Object</button>
+    </div>
+
+    <div style="height: 550px; width: 200px; border:3px solid black; position: fixed; left : 10px; top: 8px; color: blue">
+        <h4 style="font-family: Verdana;"><i>Translation</i></h4> 
+        X<input id="TLR" type="range" min="-1" max="1" step="0.01">
+        <br/>
+        Y<input id="TUD" type="range" min="-1" max="1" step="0.01">
+        <br/>
+        Z<input id="TFB" type="range" min="-1" max="1" step="0.01">
+        <br/><br/>
+        <h4 style="font-family: Verdana;"><i>Scalation</i></h4> 
+        X<input id="SX" type="range" min="-1" max="1" step="0.01">
+        <br/>
+        Y<input id="SY" type="range" min="-1" max="1" step="0.01">
+        <br/>
+        Z<input id="SZ" type="range" min="-1" max="1" step="0.01">
+        <br/><br/>
+        <h4 style="font-family: Verdana;"><i>Rotation</i></h4>
+        X<input id="RX" type="range" min="-360" max="360" step="0.01">
+        <br/>
+        Y<input id="RY" type="range" min="-360" max="360" step="0.01">
+        <br/>
+        Z<input id="RZ" type="range" min="-360" max="360" step="0.01">
+        <br/><br/>
+    </div>
+
+    <canvas width="640" height="640" id="canvas_id" style="border:3px solid blue; position:fixed; left: 220px; top: 8px; color: blue">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+</body>
+</html>
